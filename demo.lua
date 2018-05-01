@@ -15,19 +15,28 @@ local url = require("socket.url")
 local socket = require("socket")
 local inspect = require("inspect")
 
-print(socket._VERSION)
-print(url._VERSION)
+--print(socket._VERSION)
+--print(url._VERSION)
 
 local function list(u)
-    local t = {}
-    local p = url.parse(u)
-    p.command = "nlst"
-    p.argument = string.gsub(p.path, "^/", "")
-    if p.argument == "" then p.argument = nil end
-    p.sink = ltn12.sink.table(t)
-    local r, e = ftp.get(p)
-    return r and table.concat(t), e
+  local t = {}
+  local p = url.parse(u)
+  p.command = "nlst"
+  p.argument = string.gsub(p.path, "^/", "")
+  if p.argument == "" then p.argument = nil end
+  p.sink = ltn12.sink.table(t)
+  local r, e = ftp.get(p)
+  return r and table.concat(t), e
 end
+
+f, e = ftp.put{
+  host = "192.168.1.11",
+  user = "pepe",
+  password = "kiki123",
+  command = "appe",
+  argument = "Imágenes/IMG.png",
+  source = ltn12.source.file(io.open("/home/pepe/Imágenes/Captura de pantalla de 2018-04-30 07-45-33.png", "r"))
+}
 
 local ls = list('ftp://pepe:kiki123@192.168.1.11/')
 print(inspect(ls))
