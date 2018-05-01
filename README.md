@@ -2,7 +2,7 @@
 
 ### Instalación de dependencias
 
-    $ sudo luarocks install luasocket
+    $ sudo luarocks install luasocket inspect
 
 ---
 
